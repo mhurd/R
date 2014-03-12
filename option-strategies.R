@@ -49,7 +49,7 @@ plotShortCallOption <- function(strike, maturityPrices, premium, colour) {
   lines(maturityPrices, data, type="l", col=colour)
 }
 
-5 <- function(strike, offset, maturityPrices, premium) {
+plotLongCallButterfly <- function(strike, offset, maturityPrices, premium) {
   optionGraph(maturityPrices)
   points(x=strike, y=0, type="o", pch = 21, bg = "orange")
   points(x=strike-offset, y=0, type="o", pch = 21, bg = "red")
