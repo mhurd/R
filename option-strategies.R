@@ -29,14 +29,15 @@ longCallOptionProfits <- function(strike, maturityPrices, premium) {
 shortCallOptionProfits <- function(strike, maturityPrices, premium) {
   profits <- c(length=length(maturityPrices))
   for (i in 1:length(maturityPrices)) {
-    profits[i] <- shortCallOptionValue(strike, maturityPrices[i])-premium
+    profits[i] <- shortCallOptionValue(strike, maturityPrices[i])+premium
   }
   return(profits)  
 }
 
 optionGraph <- function(maturityPrices) {
   scale<-range(maturityPrices)
-  plot(scale, c(-max(scale), max(scale)), type="n", xlab="Price at Maturity", ylab="Profit $") 
+  plot(scale, c(-max(scale)/2, max(scale)/2), type="n", xlab="Price at Maturity", ylab="Profit $") 
+  lines(maturityPrices, rep(0,length(maturityPrices)), type="l", col="black")
 }
 
 plotLongCallOption <- function(strike, maturityPrices, premium, colour) {
@@ -52,8 +53,11 @@ plotShortCallOption <- function(strike, maturityPrices, premium, colour) {
 plotLongCallButterfly <- function(strike, offset, maturityPrices, premium) {
   optionGraph(maturityPrices)
   points(x=strike, y=0, type="o", pch = 21, bg = "orange")
+  text(x=strike, y=3, "Strike")
   points(x=strike-offset, y=0, type="o", pch = 21, bg = "red")
+  text(x=strike-offset, y=3, "-a")
   points(x=strike+offset, y=0, type="o", pch = 21, bg = "green")
+  text(x=strike+offset, y=3, "+a")
   plotLongCallOption(strike-offset, maturityPrices, premium, "blue")
   plotShortCallOption(strike, maturityPrices, premium, "red")
   plotShortCallOption(strike, maturityPrices, premium, "green")
